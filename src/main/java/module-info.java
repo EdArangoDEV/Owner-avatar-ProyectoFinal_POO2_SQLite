@@ -2,6 +2,7 @@ module edu.actividad1.poo2.proyectofinal_poo2 {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires  java.sql;
 
 
     opens edu.actividad1.poo2.proyectofinal_poo2 to javafx.fxml;

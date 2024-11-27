@@ -1,6 +1,7 @@
 package edu.actividad1.poo2.proyectofinal_poo2.controladores;
 
 import edu.actividad1.poo2.proyectofinal_poo2.Application;
+import edu.actividad1.poo2.proyectofinal_poo2.modelos.Conexion;
 import edu.actividad1.poo2.proyectofinal_poo2.modelos.Cursos;
 import edu.actividad1.poo2.proyectofinal_poo2.modelos.PruebaAsignacion;
 
@@ -15,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 
@@ -307,7 +310,7 @@ public class AsignacionController {
     }
 
 
-    public void asignacionEstudiante(String solvencia){
+    public void asignacionEstudiante(String solvencia) {
 
         for (String curso : listaAsignados)
         {
@@ -319,6 +322,18 @@ public class AsignacionController {
             pAsignacion.setSolvencia(solvencia);
             pAsignacion.setCurso(curso);
             app.listaAsignaciones.add(pAsignacion);
+
+//            String fecha = app.formatearFecha(LocalDate.now());
+//
+//
+//            // con insert a DB AsignacionesCursos
+//
+//            Conexion conexion = new Conexion();
+//
+//            String sql = "INSERT INTO Asignacion(fecha, solvente, id_estudiante, id_curso) VALUES (?,?,?,?);";
+//            // preparando instruccion
+//            PreparedStatement instruccion = conexion.getConexion().prepareStatement(sql);
+//            instruccion.setString(1,fecha);
         }
 //        System.out.println(app.listaAsignaciones.toArray());
     }
