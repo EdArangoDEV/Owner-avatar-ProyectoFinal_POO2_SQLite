@@ -1,0 +1,208 @@
+#Background {
+    -fx-background-color: #1e1e1e;
+}
+
+#titulo {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 18px;
+    -fx-font-family: comic-saens;
+    -fx-font-weight: bold;
+}
+
+#sub_titulo {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-family: comic-saens;
+}
+
+
+.textos {
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 12px;
+    -fx-font-family: comic-saens;
+}
+
+.fondo_textos {
+    -fx-background-color: #3c3c3c;
+    -fx-text-fill: #ffffff;
+}
+
+.botones {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-color: #528bff;
+    cursor: pointer;
+}
+
+.boton_regresar {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-color: #3c3c3c;
+    -fx-cursor: pointer;
+}
+
+
+.boton_cancelar {
+    -fx-font-size: 12.5px;
+    -fx-text-fill: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-color: #c02723;
+    -fx-cursor: pointer;
+}
+
+.botones_m:hover {
+    /*-fx-background-color: #61afef; /* Color de fondo al pasar el mouse */
+    -fx-opacity: 0.90;
+}
+
+
+.list-view {
+    -fx-background-color: #3c3c3c; /* Cambia 'lightblue' por el color que desees */
+}
+
+.list-cell {
+    -fx-background-color: #3c3c3c; /* Color de fondo para filas impares */
+    -fx-text-fill: #ffffff; /* Color del texto */
+}
+
+.list-view .placeholder .label{
+     -fx-text-fill: #ffffff; /* Color del texto */
+}
+
+
+.list-cell:selected {
+    -fx-background-color: #528bff; /* Color de fondo cuando la fila está seleccionada */
+    -fx-text-fill:  #ffffff; /* Color del texto cuando la fila está seleccionada */
+}
+
+.list-view-label {
+    -fx-text-fill:  #ffffff;  /* Cambia 'red' por el color que desees */
+    -fx-font-size: 12.5px; /* Cambia el tamaño de la fuente si es necesario */
+}
+
+
+/* Cambiar el color de fondo del campo de texto del DatePicker */
+.date-picker .text-field {
+    -fx-background-color: #3c3c3c; /* Color de fondo del campo de texto */
+    -fx-text-fill: #ffffff; /* Color del texto */
+}
+
+
+/* Cambiar el color de fondo del botón desplegable */
+.date-picker .arrow-button {
+    -fx-background-color: #528bff; /* Color de fondo del botón */
+    -fx-text-fill: #ffffff; /* Color del texto del botón */
+}
+
+
+/* Efecto hover para el botón desplegable */
+.date-picker .arrow-button:hover {
+    -fx-opacity: 0.90; /* Color al pasar el mouse sobre el botón */
+}
+
+/* Cambiar el color de fondo de las celdas en el calendario */
+.date-picker .cell {
+    -fx-background-color: #528bff;
+    -fx-text-fill: #ffffff; /* Color de fondo de las celdas */
+}
+
+/* Efecto hover para las celdas */
+.date-picker .cell:hover {
+    -fx-background-color: #e0e0e0; /* Color al pasar el mouse sobre la celda */
+}
+
+/* Cambiar el color de la celda seleccionada */
+.date-picker .selected {
+    -fx-background-color: #528bff; /* Color de fondo de la celda seleccionada */
+}
+
+.placeholder-label {
+     -fx-background-color: #528bff;
+    -fx-text-fill: #ffffff; /* Color de fondo de las celdas */
+}
+
+
+/* Cambiar el color de fondo del encabezado de la tabla */
+.table-view .column-header {
+    -fx-background-color: #528bff; /* Color de fondo del encabezado */
+    -fx-text-fill: #ffffff; /* Color del texto en el encabezado */
+    -fx-border-width: 0 1px 0 0; /* Solo el borde derecho */
+}
+
+
+/* Estilo para las etiquetas dentro del encabezado */
+.table-view .column-header .label {
+    -fx-text-fill: #ffffff; /* Color del texto en las etiquetas del encabezado */
+    -fx-font-size: 12.5px; /* Tamaño de fuente */
+    -fx-font-family: comic-saens;
+}
+
+
+/* Cambiar el color de fondo del cuerpo de la tabla */
+ .table-row-cell .table-cell{
+    -fx-background-color: #3c3c3c; /* Color de fondo por defecto para las filas */
+    -fx-text-fill: #ffffff; /* Color del texto por defecto */
+}
+
+
+/* Cambiar el color del texto al pasar el ratón sobre la fila */
+.table-row-cell:hover .table-cell {
+     -fx-opacity: 0.90; /* Color del texto al pasar el ratón */
+}
+
+/* styles.css */
+.table-row-cell:selected .table-cell{
+    -fx-background-color: transparent; /* Fondo transparente para filas seleccionadas */
+    -fx-text-fill: #ffffff; /* Color del texto */
+}
+
+
+.table-view .placeholder {
+    -fx-background-color: #3c3c3c;
+}
+
+.table-view .placeholder .label{
+    -fx-text-fill: #ffffff; /* Cambia el color del texto del placeholder */
+    -fx-font-size: 13px; /* Cambia el tamaño de la fuente si lo deseas */
+}
+
+
+/* Cambiar el color de fondo del área del encabezado del calendario */
+.date-picker-popup .month-year-pane{
+    -fx-background-color: #3c3c3c; /* Color de fondo para el encabezado */
+    -fx-text-fill: #ffffff;
+}
+
+
+
+/* Cambiar el color de fondo del área del encabezado del calendario */
+.date-picker-popup .month-year-pane .label{
+    -fx-text-fill: #ffffff;
+}
+
+/* Cambiar el color de fondo de las celdas en la lista desplegable */
+.combo-box .list-cell {
+    -fx-background-color: #3c3c3c; /* Color de fondo de las celdas */
+    -fx-text-fill: #ffffff; /* Color del texto en las celdas */
+}
+
+
+/* Cambiar el color de la celda seleccionada */
+.combo-box .list-cell:selected {
+    -fx-background-color: #3c3c3c; /* Color de fondo de la celda seleccionada */
+    -fx-text-fill: #ffffff; /* Color del texto en la celda seleccionada */
+}
+
+
+/* Efecto hover para las celdas en la lista desplegable */
+.combo-box .list-cell:hover {
+   -fx-opacity: 0.90; /* Color al pasar el mouse sobre la celda */
+}
+
+
+.combo-box .text-field  {
+   -fx-text-fill: #ffffff;
+}
+
