@@ -1,6 +1,8 @@
 package edu.actividad1.poo2.proyectofinal_poo2.controladores;
 
 import edu.actividad1.poo2.proyectofinal_poo2.Application;
+import edu.actividad1.poo2.proyectofinal_poo2.modelos.Asignacion;
+import edu.actividad1.poo2.proyectofinal_poo2.modelos.ConsultaAsignacion;
 import edu.actividad1.poo2.proyectofinal_poo2.modelos.Cursos;
 import edu.actividad1.poo2.proyectofinal_poo2.modelos.PruebaAsignacion;
 import javafx.collections.FXCollections;
@@ -42,7 +44,7 @@ public class CursosController {
     private Label lbTablaAlumnos;
 
     @FXML
-    private TableView<PruebaAsignacion> tablaAsignaciones;
+    private TableView<ConsultaAsignacion> tablaAsignaciones;
 
     @FXML
     private TableColumn<?, ?> colCarnet;
@@ -52,6 +54,9 @@ public class CursosController {
 
     @FXML
     private TableColumn<?, ?> colCorreo;
+
+    @FXML
+    private TableColumn<?, ?> colCurso;
 
     @FXML
     private TableColumn<?, ?> colFechaInsc;
@@ -80,9 +85,12 @@ public class CursosController {
         this.app = main;
     }
 
-    ObservableList listaCursos = Cursos.listaCursos.listaCursos;
+    ObservableList<Cursos> listaCursos = this.app.obtenerCursos();
+    ObservableList listaNombreCursos = this.app.obtenerNombreCursos();
+
 //    public ObservableList listaAsignaciones = FXCollections.observableArrayList();
-    ObservableList<PruebaAsignacion> listaAsignaciones = app.listaAsignaciones;
+    ObservableList<Asignacion> listaAsignaciones = app.listaAsignaciones;
+    ObservableList<ConsultaAsignacion> listaConsultaAsignaciones = app.listaConsultaAsignaciones;
 
     @FXML
     void clicRegresar(ActionEvent event) throws IOException {
@@ -105,14 +113,18 @@ public class CursosController {
         limpiarCampos();
     }
 
-    private ObservableList<PruebaAsignacion> filtrarCursos(String curso){
-        ObservableList listaFiltradosCursos = FXCollections.observableArrayList();
+    private ObservableList<ConsultaAsignacion> filtrarCursos(String curso){
+        ObservableList<ConsultaAsignacion> listaFiltradosCursos = FXCollections.observableArrayList();
 
         if(curso != null){
-            for (PruebaAsignacion asignados : listaAsignaciones) {
-                String cursoA = asignados.getCurso();
-                if (cursoA.equals(curso)){
-                    listaFiltradosCursos.add(asignados);
+            for (ConsultaAsignacion asignado : listaConsultaAsignaciones) {
+                int idCurso = asignado.getIdCurso();
+                String nombreC = app.obtenerNombreCurso(idCurso);
+
+//                System.out.println(nombreC);
+
+                if (nombreC.equals(curso)){
+                    listaFiltradosCursos.add(asignado);
                 }
             }
         }
@@ -120,14 +132,14 @@ public class CursosController {
         return listaFiltradosCursos;
     }
 
-    private ObservableList<PruebaAsignacion> filtrarFechas(String fecha){
+    private ObservableList<ConsultaAsignacion> filtrarFechas(String fecha){
         ObservableList listaFiltradosFecha = FXCollections.observableArrayList();
 
             if(fecha != null){
-                for (PruebaAsignacion asignados : listaAsignaciones) {
-                    String fechaA = asignados.getFechaAsignacion();
+                for (ConsultaAsignacion asignado : listaConsultaAsignaciones) {
+                    String fechaA = asignado.getFecha();
                     if (fechaA.equals(fecha)) {
-                        listaFiltradosFecha.add(asignados);
+                        listaFiltradosFecha.add(asignado);
                     }
                 }
             }
@@ -137,21 +149,24 @@ public class CursosController {
 
     private void llenarTablaAsignados(String curso, String fecha){
         tablaAsignaciones.setItems(null);
+//        System.out.println(listaConsultaAsignaciones);
+
 //        System.out.println(curso);
 //        System.out.println(fecha);
         graficoSolvencia.setData(FXCollections.observableArrayList());
 
-        ObservableList listaFiltrados = FXCollections.observableArrayList();
-        if (!listaAsignaciones.isEmpty()){
-            ObservableList<PruebaAsignacion> listaFiltradosCurso = FXCollections.observableArrayList();
-            ObservableList<PruebaAsignacion> listaFiltradosFecha = FXCollections.observableArrayList();
-            ObservableList<PruebaAsignacion> listaFCursoFecha = FXCollections.observableArrayList();
+        ObservableList<ConsultaAsignacion> listaFiltrados = FXCollections.observableArrayList();
+
+        if (!listaConsultaAsignaciones.isEmpty()){
+            ObservableList<ConsultaAsignacion> listaFiltradosCurso = FXCollections.observableArrayList();
+            ObservableList<ConsultaAsignacion> listaFiltradosFecha = FXCollections.observableArrayList();
+            ObservableList<ConsultaAsignacion> listaFCursoFecha = FXCollections.observableArrayList();
 
             if(curso != null && fecha != null) {
                 listaFiltradosCurso = filtrarCursos(curso);
                 if(!listaFiltradosCurso.isEmpty()){
-                    for (PruebaAsignacion asignado : listaFiltradosCurso) {
-                        String fechaA = asignado.getFechaAsignacion();
+                    for (ConsultaAsignacion asignado : listaFiltradosCurso) {
+                        String fechaA = asignado.getFecha();
                         if (fechaA.equals(fecha))
                             listaFCursoFecha.add(asignado);
                     }
@@ -192,14 +207,14 @@ public class CursosController {
         }
     }
 
-    private void llenarGraficoPie(ObservableList<PruebaAsignacion> listAsignados, PieChart graficoSolvencia){
+    private void llenarGraficoPie(ObservableList<ConsultaAsignacion> listAsignados, PieChart graficoSolvencia){
 
         ObservableList<PieChart.Data> graficoPieSolvencia = FXCollections.observableArrayList();
 
         int totalSolventes = 0;
         int totalNoSolventes = 0;
 
-        for (PruebaAsignacion estudiante : listAsignados) {
+        for (ConsultaAsignacion estudiante : listAsignados) {
             String solvencia = estudiante.getSolvencia().toLowerCase();
             if (solvencia.equals("si")) {
                 totalSolventes ++;
@@ -231,18 +246,21 @@ public class CursosController {
     }
 
     public void initialize(){
-        comboBCursos.setItems(listaCursos);
+        comboBCursos.setItems(listaNombreCursos);
 
         colCarnet.setCellValueFactory(new PropertyValueFactory<>("carnet"));
         colNombre.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colCorreo.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        colFechaInsc.setCellValueFactory(new PropertyValueFactory<>("fechaAsignacion"));
+        colCurso.setCellValueFactory(new PropertyValueFactory<>("curso"));
+        colFechaInsc.setCellValueFactory(new PropertyValueFactory<>("fecha"));
         colSolvencia.setCellValueFactory(new PropertyValueFactory<>("solvencia"));
         tablaAsignaciones.setItems(null);
         tablaAsignaciones.setPlaceholder(new Label(pholderTablaInicio));
 
         cursoSeleccionado = null;
         fechaFormateada = null;
+
+        app.obtenerAsignaciones();
 
          //Añadir listener al ComboBox
         comboBCursos.setOnAction(event -> {

@@ -25,12 +25,14 @@ public class Conexion {
     }
 
     public  Connection getConexion(){
+//        System.out.println("Se ha conectado a base de datos...");
         return  this.conexion;
     }
 
     public void closeConexion(){
         try {
             this.conexion.close();
+//            System.out.println("Se ha desconectado a base de datos...");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
