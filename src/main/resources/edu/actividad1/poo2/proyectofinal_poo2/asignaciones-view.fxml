@@ -12,11 +12,11 @@
    <children>
       <Label id="titulo" fx:id="lbAsignaciones" alignment="CENTER" contentDisplay="CENTER" layoutX="374.0" layoutY="14.0" prefHeight="30.0" prefWidth="177.0" text="Asignación" />
       <Label id="sub_titulo" fx:id="lbAsignaciones1" alignment="CENTER" contentDisplay="CENTER" layoutX="82.0" layoutY="54.0" prefHeight="30.0" prefWidth="177.0" text="Datos Alumno" />
-      <Label fx:id="lbNombre" layoutX="40.0" layoutY="75.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Nombre" />
-      <TextField fx:id="txtFieldNombre" layoutX="40.0" layoutY="94.0" prefHeight="25.0" prefWidth="260.0" promptText="Nombres y Apellidos" styleClass="fondo_textos" />
-      <Label fx:id="lbCarnet" layoutX="40.0" layoutY="127.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Carnet" />
-      <TextField fx:id="txtFieldCarnet" layoutX="40.0" layoutY="146.0" prefHeight="25.0" prefWidth="260.0" promptText="240001" styleClass="fondo_textos" />
-      <Label fx:id="lbTel" layoutX="40.0" layoutY="178.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Teléfono" />
+      <Label fx:id="lbCarnet" layoutX="40.0" layoutY="78.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Carnet" />
+      <TextField fx:id="txtFieldCarnet" layoutX="40.0" layoutY="96.0" prefHeight="25.0" prefWidth="260.0" promptText="240001" styleClass="fondo_textos" />
+      <Label fx:id="lbNombre" layoutX="40.0" layoutY="128.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Nombre" />
+      <TextField fx:id="txtFieldNombre" layoutX="41.0" layoutY="145.0" prefHeight="25.0" prefWidth="260.0" promptText="Nombres y Apellidos" styleClass="fondo_textos" />
+      <Label fx:id="lbTel" layoutX="40.0" layoutY="180.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Teléfono" />
       <TextField fx:id="txtFieldTel" layoutX="40.0" layoutY="197.0" prefHeight="25.0" prefWidth="260.0" promptText="2233 4455" styleClass="fondo_textos" />
       <Label fx:id="lbDireccion" layoutX="40.0" layoutY="228.0" prefHeight="17.0" prefWidth="66.0" styleClass="textos" text="Direccion" />
       <TextField fx:id="txtFieldDireccion" layoutX="40.0" layoutY="247.0" prefHeight="25.0" prefWidth="260.0" promptText="Direccion" styleClass="fondo_textos" />

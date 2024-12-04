@@ -1,20 +1,21 @@
 package edu.actividad1.poo2.proyectofinal_poo2.controladores;
 
 import edu.actividad1.poo2.proyectofinal_poo2.Application;
-import edu.actividad1.poo2.proyectofinal_poo2.modelos.Cursos;
-import edu.actividad1.poo2.proyectofinal_poo2.modelos.PruebaAsignacion;
+import edu.actividad1.poo2.proyectofinal_poo2.modelos.*;
 
 
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
+import javax.swing.undo.CannotUndoException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 
 
@@ -75,9 +76,11 @@ public class AsignacionController {
     private Label lbTitular;
 
     @FXML
-    private ListView<?> listCursos;
+    private ListView<String> listCursos;
 
-    public ObservableList listaCursos = Cursos.listaCursos.listaCursos;
+    public ObservableList<Cursos> listaCursos = this.app.obtenerCursos();
+
+    public ObservableList<String> listaNombreCursos = this.app.obtenerNombreCursos();
 
     @FXML
     private ListView<String> listAsignados;
@@ -176,6 +179,9 @@ public class AsignacionController {
     boolean campoFExpiracion = false;
     boolean campoCVC = false;
 
+    boolean estudianteEnDB = false;
+    String carnetAnt = "";
+
     private void validarCamposEstudiante(Integer opcion){
 
         if(opcion != 0){
@@ -185,6 +191,9 @@ public class AsignacionController {
                     break;
                 case 2:
                     campoCarnet = vtxtF.validarCampos(txtFieldCarnet.getText(), 2);
+                    if(campoCarnet && !estudianteEnDB){
+                        completarDatosEstudiante(txtFieldCarnet.getText());
+                    }
                     break;
                 case 3:
                     campoTel = vtxtF.validarCampos(txtFieldTel.getText(), 3);
@@ -206,6 +215,35 @@ public class AsignacionController {
             validarDatosEstudiante();
         }
         setBotonAsignar();
+
+    }
+
+    private void completarDatosEstudiante(String carnet){
+        Estudiante estudiante = new Estudiante();
+//        System.out.println(carnet);
+
+        if(!carnetAnt.equals(carnet)){
+            if(carnet != null){
+                estudiante = this.app.obtenerDatosEstudiante(Integer.parseInt(carnet));
+            }
+
+            if (estudiante.getCarnet() != null){
+
+                txtFieldNombre.setText(estudiante.getNombre());
+                txtFieldCarnet.setText(estudiante.getCarnet());
+                txtFieldDireccion.setText(estudiante.getDireccin());
+                txtFieldTel.setText(estudiante.getTelefono());
+                txtFieldCorreo.setText(estudiante.getEmail());
+
+                validarCamposEstudiante(0);
+                estudianteEnDB = true;
+
+                vtxtF.alertInformation("Carnet: " + estudiante.getCarnet() + " ya esta registrado y se completaron los datos.", "Carnet ya esta registrado!");
+            }
+
+            carnetAnt = carnet;
+        }
+
 
     }
 
@@ -307,21 +345,35 @@ public class AsignacionController {
     }
 
 
-    public void asignacionEstudiante(String solvencia){
+    public void asignacionEstudiante(String solvencia) {
 
-        for (String curso : listaAsignados)
-        {
-            PruebaAsignacion pAsignacion = new PruebaAsignacion();
-            pAsignacion.setCarnet(txtFieldCarnet.getText());
-            pAsignacion.setNombre(txtFieldNombre.getText());
-            pAsignacion.setCorreo(txtFieldCorreo.getText());
-            pAsignacion.setFechaAsignacion(app.formatearFecha(LocalDate.now()));
-            pAsignacion.setSolvencia(solvencia);
-            pAsignacion.setCurso(curso);
-            app.listaAsignaciones.add(pAsignacion);
+
+        int idEstudiante = this.app.agregarEstudiante(Integer.parseInt(txtFieldCarnet.getText()), txtFieldNombre.getText(),txtFieldTel.getText(), txtFieldDireccion.getText(), txtFieldCorreo.getText());
+        Asignacion asignacion = new Asignacion();
+
+        if(idEstudiante != 0){
+            for (String curso : listaAsignados) {
+
+
+                asignacion.setFechaAsignacion(app.formatearFecha(LocalDate.now()));
+                asignacion.setSolvencia(solvencia);
+
+                asignacion.setIdEstudiante(idEstudiante);
+
+                int idCurso = this.app.obtenerIdCurso(curso);
+                asignacion.setIdCurso(idCurso);
+
+                this.app.agregarAsignacion(asignacion);
+
+            }
+            this.app.confirmacionAsignacion(asignacion, listaAsignados, Integer.parseInt(txtFieldCarnet.getText()));
+            estudianteEnDB = true;
         }
-//        System.out.println(app.listaAsignaciones.toArray());
+        else{
+            estudianteEnDB = false;
+        }
     }
+
 
 
     private void setBCancelar(boolean valor){
@@ -493,7 +545,8 @@ public class AsignacionController {
         listCursos.setPlaceholder(placehCursos);
         listAsignados.setPlaceholder(placehAsignaciones);
 
-        listCursos.setItems(listaCursos);
+        listCursos.setItems(listaNombreCursos);
+//        this.app.obtenerCursos();
 
 
         listCursos.getSelectionModel().setSelectionMode(javafx.scene.control.SelectionMode.SINGLE);
