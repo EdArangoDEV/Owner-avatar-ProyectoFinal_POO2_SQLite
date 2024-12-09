@@ -154,6 +154,8 @@ public class AsignacionController {
     void clicCancelar(ActionEvent event) {
         limpiarDatos();
         validarDatosEstudiante();
+//        estudianteEnDB = false;
+
     }
 
     @FXML
@@ -167,6 +169,7 @@ public class AsignacionController {
     boolean pago = false;
     String curso;
     boolean validoD = false;
+
     boolean campoNombre = false;
     boolean campoCarnet = false;
     boolean campoTel = false;
@@ -179,7 +182,7 @@ public class AsignacionController {
     boolean campoFExpiracion = false;
     boolean campoCVC = false;
 
-    boolean estudianteEnDB = false;
+//    boolean estudianteEnDB = false;
     String carnetAnt = "";
 
     private void validarCamposEstudiante(Integer opcion){
@@ -191,7 +194,7 @@ public class AsignacionController {
                     break;
                 case 2:
                     campoCarnet = vtxtF.validarCampos(txtFieldCarnet.getText(), 2);
-                    if(campoCarnet && !estudianteEnDB){
+                    if(campoCarnet){
                         completarDatosEstudiante(txtFieldCarnet.getText());
                     }
                     break;
@@ -222,28 +225,40 @@ public class AsignacionController {
         Estudiante estudiante = new Estudiante();
 //        System.out.println(carnet);
 
-        if(!carnetAnt.equals(carnet)){
+
             if(carnet != null){
                 estudiante = this.app.obtenerDatosEstudiante(Integer.parseInt(carnet));
             }
 
             if (estudiante.getCarnet() != null){
 
-                txtFieldNombre.setText(estudiante.getNombre());
                 txtFieldCarnet.setText(estudiante.getCarnet());
+                txtFieldNombre.setText(estudiante.getNombre());
                 txtFieldDireccion.setText(estudiante.getDireccin());
                 txtFieldTel.setText(estudiante.getTelefono());
                 txtFieldCorreo.setText(estudiante.getEmail());
 
+                campoNombre = true;
+                campoCarnet = true;
+                campoTel = true;
+                campoDireccion = true;
+                campoCorreo = true;
+
+
                 validarCamposEstudiante(0);
-                estudianteEnDB = true;
+//                estudianteEnDB = true;
 
-                vtxtF.alertInformation("Carnet: " + estudiante.getCarnet() + " ya esta registrado y se completaron los datos.", "Carnet ya esta registrado!");
+                vtxtF.alertInformation("Carnet: " + estudiante.getCarnet() + " ya esta registrado y se completaron los datos.", "Informacion!");
             }
+            else {
+                campoNombre = false;
+                campoCarnet = false;
+                campoTel = false;
+                campoDireccion = false;
+                campoCorreo = false;
 
-            carnetAnt = carnet;
-        }
-
+                validarCamposEstudiante(0);
+            }
 
     }
 
@@ -286,7 +301,7 @@ public class AsignacionController {
         boolean txtFTel = txtFieldTel.getText() == null;
         boolean txtFDireccion = txtFieldDireccion.getText() == null;
         boolean txtFCorrero = txtFieldCorreo.getText() == null;
-        boolean listaCursosAsig = listaCursos.isEmpty();
+        boolean listaCursosAsig = listaAsignados.isEmpty();
 
 
         pagar = (txtFNombre || txtFCarnet || txtFTel || txtFDireccion || txtFCorrero || listaCursosAsig) ? true : false;
@@ -367,11 +382,12 @@ public class AsignacionController {
 
             }
             this.app.confirmacionAsignacion(asignacion, listaAsignados, Integer.parseInt(txtFieldCarnet.getText()));
-            estudianteEnDB = true;
+//            estudianteEnDB = true;
         }
         else{
-            estudianteEnDB = false;
+//            estudianteEnDB = false;
         }
+        validoD = false;
     }
 
 
@@ -391,6 +407,13 @@ public class AsignacionController {
         txtFieldExpiracionT.setText(null);
         txtFieldCVC.setText(null);
         listaAsignados.clear();
+        carnetAnt = "";
+        validoD = false;
+        campoNombre = false;
+        campoCarnet = false;
+        campoTel = false;
+        campoDireccion = false;
+        campoCorreo = false;
     }
 
 
@@ -421,7 +444,7 @@ public class AsignacionController {
 
         txtFieldNombre.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(!nueValue  && txtFieldNombre.getText() != null){
-                if(!txtFieldNombre.getText().equals("")){
+                if(txtFieldNombre.getText() != null){
 //                  validarDatosEstudiante();
                     validarCamposEstudiante(1);
                 } else {
@@ -435,7 +458,7 @@ public class AsignacionController {
 
         txtFieldCarnet.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldCarnet.getText() != null && !nueValue){
-                if(!txtFieldCarnet.getText().equals("")){
+                if(txtFieldCarnet.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposEstudiante(2);
                 }
@@ -448,7 +471,7 @@ public class AsignacionController {
 
         txtFieldTel.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldTel.getText() != null && !nueValue){
-                if(!txtFieldTel.getText().equals("")){
+                if(txtFieldTel.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposEstudiante(3);
                 }
@@ -461,7 +484,7 @@ public class AsignacionController {
 
         txtFieldDireccion.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldDireccion.getText() != null && !nueValue){
-                if(!txtFieldDireccion.getText().equals("")){
+                if(txtFieldDireccion.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposEstudiante(4);
                 }
@@ -474,7 +497,7 @@ public class AsignacionController {
 
         txtFieldCorreo.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldCorreo.getText() != null && !nueValue){
-                if(!txtFieldCorreo.getText().equals("")){
+                if(txtFieldCorreo.getText() != null){
 //                            validarDatosEstudiante();
                     validarCamposEstudiante(5);
                 }
@@ -487,7 +510,7 @@ public class AsignacionController {
 
         txtFielNTarjeta.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFielNTarjeta.getText() != null && !nueValue){
-                if(!txtFielNTarjeta.getText().equals("")){
+                if(txtFielNTarjeta.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposPago(1);
                 }
@@ -500,7 +523,7 @@ public class AsignacionController {
 
         txtFieldTitular.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldTitular.getText() != null && !nueValue){
-                if(!txtFieldTitular.getText().equals("")){
+                if(txtFieldTitular.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposPago(2);
                 }
@@ -513,7 +536,7 @@ public class AsignacionController {
 
         txtFieldExpiracionT.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldExpiracionT.getText() != null && !nueValue){
-                if(!txtFieldExpiracionT.getText().equals("")){
+                if(txtFieldExpiracionT.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposPago(3);
                 }
@@ -526,7 +549,7 @@ public class AsignacionController {
 
         txtFieldCVC.focusedProperty().addListener((observable, antValue, nueValue) -> {
             if(txtFieldCVC.getText() != null && !nueValue){
-                if(!txtFieldCVC.getText().equals("")){
+                if(txtFieldCVC.getText() != null){
 //                   validarDatosEstudiante();
                     validarCamposPago(4);
                 }
@@ -565,7 +588,7 @@ public class AsignacionController {
                 listCursos.getSelectionModel().clearSelection();
 
                 if (txtFieldNombre.getText() != null && txtFieldCarnet.getText() != null && txtFieldTel.getText() != null && txtFieldDireccion.getText() != null && txtFieldCorreo.getText() != null ) {
-                    validarCamposEstudiante(0);
+                    validarDatosEstudiante();
                 }
             }
         });
