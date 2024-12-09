@@ -156,8 +156,5 @@ public class ValidacionTextFields {
         alert.showAndWait();
     }
 
-    // Cargar el archivo CSS
-    String css = this.getClass().getResource("..\\src\\main\\resources\\edu\\actividad1\\poo2\\proyectofinal_poo2").toExternalForm();
-
 
 }
